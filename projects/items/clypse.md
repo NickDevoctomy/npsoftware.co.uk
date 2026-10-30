@@ -25,6 +25,4 @@ It's designed to use the latest cryptographic standards, but also to be highly c
 
 It uses a few other AWS serverless technologies to make the system a reality, including Cognito, IAM and CloudFront. It's still a work in progress, but the software is completely open source.
 
-## What's next
-
-I'm currently developing a new underlying framework for creating static web apps with cloud syncing and high security built in. It isn't open just yet, but watch this space, as it will be available soon.
+> ⚠️ I'm currently developing a new underlying framework for creating static web apps with cloud syncing and security built-in. That will become the new basis of clypse and will be even easier to deploy and manage, watch this space.
