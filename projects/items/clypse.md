@@ -21,8 +21,10 @@ Clypse is a complete password management system that you host yourself in Amazon
 
 It's designed to use the latest cryptographic standards, but also to be highly customisable.
 
-## How it works
+### How it works
 
 It uses a few other AWS serverless technologies to make the system a reality, including Cognito, IAM and CloudFront. It's still a work in progress, but the software is completely open source.
+
+... more information to come ...
 
 > ⚠️ I'm currently developing a new underlying framework for creating static web apps with cloud syncing and security built-in. That will become the new basis of clypse and will be even easier to deploy and manage, watch this space.
