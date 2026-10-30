@@ -98,12 +98,12 @@ export default function (eleventyConfig) {
       .sort((a, b) => String(b.start).localeCompare(String(a.start)))
   );
 
-  // Projects by `order`, then name, each with its rendered description.
+  // Projects by `order`, then name, each with its URL and rendered write-up.
   eleventyConfig.addCollection("projects", (api) =>
     api
       .getFilteredByGlob("projects/items/*.md")
       .map((item) => {
-        const project = { ...item.data };
+        const project = { ...item.data, url: item.url };
         Object.defineProperty(project, "content", { enumerable: true, get: () => item.templateContent });
         return project;
       })

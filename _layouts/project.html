@@ -1,0 +1,94 @@
+---
+layout: base
+---
+{%- for project in collections.projects %}
+  {%- if project.url == page.url %}
+    {%- assign prev_index = forloop.index0 | minus: 1 %}
+    {%- assign next_index = forloop.index0 | plus: 1 %}
+  {%- endif %}
+{%- endfor %}
+{%- if prev_index >= 0 %}{% assign prev_project = collections.projects[prev_index] %}{% endif %}
+{%- assign next_project = collections.projects[next_index] %}
+<article class="project-page">
+  <header class="project-hero">
+    <span class="project-hero__glyph" aria-hidden="true">{{ name | slice: 0 }}</span>
+    <div class="wrap wrap--medium project-hero__inner">
+      <a class="back-link project-hero__back" href="/projects/">{% include icon.html name="arrow-left" px=16 %}All projects</a>
+      <div class="project-hero__top">
+        <span class="project-hero__mark" aria-hidden="true">{{ name | slice: 0 }}</span>
+        {%- if status %}
+        <span class="pill project-hero__status"><span class="pill__dot"></span>{{ status }}</span>
+        {%- endif %}
+      </div>
+      <h1 class="project-hero__name">{{ name }}</h1>
+      {%- if description %}
+      <p class="project-hero__lead">{{ description }}</p>
+      {%- endif %}
+      {%- if links.size > 0 %}
+      <div class="project-hero__links">
+        {%- for link in links %}
+        <a class="btn {% if forloop.first %}btn--accent{% else %}btn--glass{% endif %}" href="{{ link.url }}" rel="noopener">{% include icon.html name=link.icon px=18 %}{{ link.label }}</a>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+      {%- if skills.size > 0 %}
+      <ul class="project-hero__skills" aria-label="Technologies">
+        {%- for skill in skills %}
+        <li>{{ skill }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+  </header>
+
+  <div class="wrap wrap--medium project-page__layout">
+    <aside class="project-aside">
+      <nav class="project-toc" aria-labelledby="project-toc-title" data-toc hidden>
+        <h2 class="project-aside__title" id="project-toc-title">On this page</h2>
+        <ol class="project-toc__list" data-toc-list></ol>
+      </nav>
+      {%- if links.size > 0 %}
+      <div class="project-aside__links">
+        <h2 class="project-aside__title">Links</h2>
+        <ul>
+          {%- for link in links %}
+          <li><a href="{{ link.url }}" rel="noopener">{% include icon.html name=link.icon px=16 %}<span><strong>{{ link.label }}</strong>{{ link.url | remove_first: "https://" | remove_first: "http://" }}</span></a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endif %}
+    </aside>
+
+    {%- assign writeup = content | strip %}
+    {%- if writeup != "" %}
+    <div class="article__body project-page__body prose" data-toc-source>
+      {{ content }}
+    </div>
+    {%- else %}
+    <div class="project-page__empty">
+      <p>The full write-up for {{ name }} is on its way. Check back soon.</p>
+    </div>
+    {%- endif %}
+  </div>
+
+  {%- if prev_project or next_project %}
+  <nav class="wrap wrap--medium project-pager" aria-label="More projects">
+    {%- if prev_project %}
+    <a class="project-pager__link" href="{{ prev_project.url }}" rel="prev">
+      <span class="project-pager__label">{% include icon.html name="arrow-left" px=16 %}Previous project</span>
+      <span class="project-pager__name">{{ prev_project.name }}</span>
+    </a>
+    {%- endif %}
+    {%- if next_project %}
+    <a class="project-pager__link project-pager__link--next" href="{{ next_project.url }}" rel="next">
+      <span class="project-pager__label">Next project{% include icon.html name="arrow-right" px=16 %}</span>
+      <span class="project-pager__name">{{ next_project.name }}</span>
+    </a>
+    {%- endif %}
+  </nav>
+  {%- endif %}
+
+  <div class="wrap wrap--medium project-page__share">
+    {% include share.html %}
+  </div>
+</article>

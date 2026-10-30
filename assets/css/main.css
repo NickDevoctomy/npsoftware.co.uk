@@ -587,18 +587,221 @@ button.icon-btn { padding: 0; font: inherit; cursor: pointer; }
 
 .project-list { margin: 40px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 20px; }
 
+/* Each card is one big link to the project's page (the name's ::after covers
+   the card); the buttons sit above it. */
 .project {
-  padding: clamp(24px, 4vw, 32px);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 36px);
   border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--line);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
+.project::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 0%, transparent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+.project:hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+.project:hover::before { transform: scaleX(1); }
 .project__head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
-.project__name { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.01em; }
+.project__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-ink));
+  color: #FFFFFF;
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.project__name { margin: 0; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.project__link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.project__link:hover { color: var(--ink); }
 .project__head .tag { align-self: center; }
-.project__body { margin-top: 20px; font-size: 17px; line-height: 1.7; }
-.project__body p, .project__body ul { margin-bottom: 14px; }
-.project__links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.project__text { margin: 18px 0 0; font-size: 18px; line-height: 1.65; color: var(--muted); }
+.project__links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.project__links .btn { position: relative; z-index: 1; }
+.project__more { height: 44px; padding: 0 20px; font-size: 15px; }
+.project__more svg { transition: transform 0.2s ease; }
+.project:hover .project__more svg { transform: translateX(3px); }
+
+/* --- Project page ---------------------------------------------------------- */
+
+.project-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 0 56px;
+  background-color: var(--dark);
+  background-image:
+    radial-gradient(circle at 85% -10%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 50%),
+    radial-gradient(circle at 0% 110%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 45%),
+    linear-gradient(color-mix(in srgb, var(--on-dark) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--on-dark) 5%, transparent) 1px, transparent 1px);
+  background-size: auto, auto, 36px 36px, 36px 36px;
+  color: var(--on-dark);
+}
+
+/* A huge outlined initial, bleeding off the right-hand side. */
+.project-hero__glyph {
+  position: absolute;
+  right: -0.04em;
+  bottom: -0.24em;
+  font-size: clamp(260px, 42vw, 520px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 2px color-mix(in srgb, var(--on-dark) 10%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+
+.project-hero__inner { position: relative; }
+.project-hero__back { color: var(--on-dark-faint); }
+.project-hero__back:hover { color: var(--on-dark); }
+
+.project-hero__top { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 28px; }
+.project-hero__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--accent) 45%, transparent), inset 0 1px 0 color-mix(in srgb, #FFFFFF 30%, transparent);
+  color: #FFFFFF;
+  font-size: 34px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.project-hero__status { background: color-mix(in srgb, var(--on-dark) 10%, transparent); color: var(--on-dark); }
+.project-hero__status .pill__dot { position: relative; }
+.project-hero__status .pill__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s ease-out infinite;
+}
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(3); opacity: 0; }
+}
+
+.project-hero__name { margin: 24px 0 0; font-size: clamp(52px, 9vw, 96px); line-height: 0.95; font-weight: 800; letter-spacing: -0.045em; }
+.project-hero__lead { margin: 20px 0 0; max-width: 640px; font-size: clamp(19px, 2.4vw, 23px); line-height: 1.5; color: var(--on-dark-muted); }
+.project-hero__links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.btn--glass { background: color-mix(in srgb, var(--on-dark) 8%, transparent); border-color: color-mix(in srgb, var(--on-dark) 20%, transparent); color: var(--on-dark); }
+.btn--glass:hover { border-color: var(--on-dark); color: var(--on-dark); }
+
+.project-hero__skills { display: flex; flex-wrap: wrap; gap: 8px; margin: 32px 0 0; padding: 24px 0 0; border-top: 1px solid var(--dark-line); list-style: none; }
+.project-hero__skills li {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--on-dark) 18%, transparent);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--on-dark-muted);
+}
+
+/* Small screens: the aside, then the write-up. Wide screens: the write-up
+   overlaps the bottom of the hero, with the aside to its right. */
+.project-page__layout { display: flex; flex-direction: column; gap: 32px; margin-top: 32px; }
+.project-page__body, .project-page__empty { position: relative; flex: 1 1 auto; min-width: 0; margin-top: 0; box-shadow: var(--shadow-soft); }
+.project-page__empty {
+  padding: clamp(28px, 5vw, 48px);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 2px dashed var(--line-strong);
+  color: var(--muted);
+  font-size: 18px;
+  text-align: center;
+}
+.project-page__empty p { margin: 0; }
+
+/* The contents list and links, beside the write-up on wide screens. */
+.project-aside { display: flex; flex-direction: column; gap: 28px; }
+.project-aside:not(:has(> :not([hidden]))) { display: none; }
+.project-aside__title { margin: 0 0 12px; font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); }
+
+.project-toc__list { margin: 0; padding: 0; list-style: none; border-left: 2px solid var(--line); counter-reset: toc; }
+.project-toc__list a {
+  display: flex;
+  gap: 10px;
+  margin-left: -2px;
+  padding: 7px 0 7px 16px;
+  border-left: 2px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--muted);
+  counter-increment: toc;
+}
+.project-toc__list a::before { content: counter(toc, decimal-leading-zero); font-family: var(--mono); font-size: 12px; line-height: 1.75; color: var(--faint); }
+.project-toc__list a:hover { color: var(--ink); }
+.project-toc__list a[aria-current="true"] { border-left-color: var(--accent); color: var(--accent-ink); }
+.project-toc__list a[aria-current="true"]::before { color: var(--accent); }
+
+.project-aside__links ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.project-aside__links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+.project-aside__links a:hover { border-color: var(--ink); color: var(--muted); }
+.project-aside__links svg { flex: 0 0 auto; color: var(--accent); }
+.project-aside__links span { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+.project-aside__links strong { font-size: 15px; color: var(--ink); }
+
+/* On small screens the hero's buttons are just above, so skip the links. */
+@media (max-width: 859px) {
+  .project-aside__links { display: none; }
+}
+
+/* Sticky only when the aside is a column beside the write-up. */
+@media (min-width: 860px) {
+  .project-page__layout { flex-direction: row-reverse; align-items: flex-start; margin-top: -24px; }
+  .project-aside { position: sticky; top: 24px; flex: 0 0 220px; padding-top: 56px; }
+}
+
+.project-pager { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
+.project-pager__link {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 26px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.project-pager__link:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-2px); }
+.project-pager__link--next { align-items: flex-end; text-align: right; }
+.project-pager__label { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.project-pager__name { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+
+.project-page__share { padding-bottom: 96px; }
 
 /* --- Search ---------------------------------------------------------------- */
 
@@ -715,6 +918,7 @@ button.icon-btn { padding: 0; font: inherit; cursor: pointer; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .feature-card, .post-card { transition: none; }
-  .feature-card:hover, .post-card:hover { transform: none; }
+  .feature-card, .post-card, .project, .project::before, .project__more svg, .project-pager__link { transition: none; }
+  .feature-card:hover, .post-card:hover, .project:hover, .project:hover .project__more svg, .project-pager__link:hover { transform: none; }
+  .project-hero__status .pill__dot::after { animation: none; }
 }

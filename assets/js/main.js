@@ -1,5 +1,5 @@
-// npSoftware: cookie notice, colour theme button, copy-link button and the
-// search page.
+// npSoftware: cookie notice, colour theme button, copy-link button, project
+// contents lists and the search page.
 (function () {
   "use strict";
 
@@ -80,6 +80,44 @@
         }
       });
     });
+  }
+
+  // --- Project contents -----------------------------------------------------
+
+  // Lists a project write-up's ## headings beside it, marking the one being
+  // read. Hidden unless there are at least two.
+  function initToc() {
+    var toc = document.querySelector("[data-toc]");
+    var source = document.querySelector("[data-toc-source]");
+    if (!toc || !source) return;
+    var headings = Array.prototype.slice.call(source.querySelectorAll("h2[id]"));
+    if (headings.length < 2) return;
+
+    var list = toc.querySelector("[data-toc-list]");
+    var links = headings.map(function (heading) {
+      var item = document.createElement("li");
+      var link = document.createElement("a");
+      link.href = "#" + heading.id;
+      link.textContent = heading.textContent;
+      item.appendChild(link);
+      list.appendChild(item);
+      return link;
+    });
+    toc.hidden = false;
+
+    // The current section is the last heading scrolled past the top third.
+    function mark() {
+      var current = 0;
+      headings.forEach(function (heading, i) {
+        if (heading.getBoundingClientRect().top < window.innerHeight / 3) current = i;
+      });
+      links.forEach(function (link, i) {
+        if (i === current) link.setAttribute("aria-current", "true");
+        else link.removeAttribute("aria-current");
+      });
+    }
+    window.addEventListener("scroll", mark, { passive: true });
+    mark();
   }
 
   // --- Search ---------------------------------------------------------------
@@ -197,6 +235,7 @@
     initCookieNotice();
     initThemeToggle();
     initCopyLinks();
+    initToc();
     initSearch();
   });
 })();
