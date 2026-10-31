@@ -8,6 +8,6 @@ location: Brighton, England, United Kingdom
 workplace: On-site
 skills: ["C#", "ASP.NET Web API", "CQRS", "Docker"]
 ---
-Initial responsibilities were to assist in the major refactoring and re-development work of Avalara's EMEA-based automated filing solution for one of their largest clients. This involved working in a small team to assist in the refactoring of a monolithic API into smaller microservices, along with the development of new microservices. The intention was to improve performance and reliability of the product so that it could be further developed, as the current design was not capable of being pushed any further. The result was massively decreased support costs and reported issues during filing cycles, enabling the product to fulfil its purpose and also undergo many feature improvements.
+Initial responsibilities were to assist in the major refactoring and re-development of Avalara's EMEA-based automated filing solution. This involved working in a small team to break a monolithic API down into smaller microservices, along with developing new ones, to improve the product's performance and reliability and give it room to grow. The result was a big reduction in support effort during filing cycles, and a platform ready to take on many new features.
 
 Other duties included filing cycle support and assisting with DE VAT tasks, for which I developed several small utilities to speed up the process and dramatically cut down the effort required.
