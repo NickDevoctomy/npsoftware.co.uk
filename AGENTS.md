@@ -10,7 +10,7 @@ Instructions for AI coding agents working in this repository.
    - A question about the release flow ("then we push and tag?") is a question, not an instruction.
    - Leave changes uncommitted in the working tree. The maintainer reviews, commits and pushes.
 2. **No AI attribution.** Never add `Co-Authored-By`, "Generated with…" or similar lines to commits, PRs, tags or files.
-3. **Pushing a `v*` tag deploys the live site.** Never create or push tags.
+3. **The Deploy workflow publishes the live site.** Never run it (`gh workflow run` included), and never create or push tags or releases. It creates its own.
 4. If an action is blocked or fails, stop and report it. Don't substitute a different or more destructive action.
 
 ## Project
@@ -31,7 +31,7 @@ Personal blog of Nick Pateman, served at https://www.npsoftware.co.uk from S3 be
 - `feed.xml` (RSS) and `sitemap.xml` are hand-written Liquid templates.
 - `assets/` (CSS, JS, images) is copied as-is, with no build step.
 - `temp/` is scratch space (for example, `temp/profile/` holds notes for writing site content). It's git-ignored, which also keeps Eleventy from building it.
-- The footer version comes from `_data/build.js`: the deploy's tag (`GITHUB_REF_NAME`), else the tag on `HEAD`, else the short commit hash. It links to the tag or commit under `site.repo_url`.
+- The footer version comes from `_data/build.js`: the deploy's new release tag (`SITE_VERSION`), else the tag on `HEAD`, else the short commit hash. It links to the tag or commit under `site.repo_url`.
 - `initpost.sh -c <title>` creates a new post skeleton.
 
 ## Build
@@ -52,5 +52,5 @@ npm run compare  # compare _site/ with the live site
 ## CI/CD
 
 - `.github/workflows/build.yml` builds every push to any branch and every PR. It never deploys.
-- `.github/workflows/deploy.yml` deploys only from `v*` tags on commits in `main`, for example by publishing a GitHub release. It checks the tag is on `main`, runs the Eleventy build, then `aws s3 sync --delete` and a CloudFront invalidation. A tag that isn't on `main` fails before anything is uploaded.
+- `.github/workflows/deploy.yml` is run by hand (Actions → Deploy → Run workflow) and always deploys the head of `main`. Started from any other branch, it fails before doing anything. It picks the next `vYYYY.MM.DD[.N]` tag, builds with that as `SITE_VERSION`, publishes a GitHub release for the tag (which creates it), then runs `aws s3 sync --delete` and a CloudFront invalidation. `main` only takes changes through PRs, and a ruleset stops `v*` tags being deleted or moved.
 - The AWS credentials, bucket and distribution ID are secrets, and the deploy job runs in the `production` environment.

@@ -2,8 +2,8 @@ import { execFileSync } from "node:child_process";
 import site from "./site.js";
 
 // The version shown in the footer, linked to GitHub.
-// Deploys run from a v* tag (GITHUB_REF_NAME). Other builds use the tag on
-// HEAD if there is one, else the short commit hash.
+// Deploys pass their new v* release tag in SITE_VERSION. Other builds use the
+// tag on HEAD if there is one, else the short commit hash.
 function git(...args) {
   try {
     return execFileSync("git", args, { stdio: ["ignore", "pipe", "ignore"] }).toString().trim();
@@ -13,7 +13,7 @@ function git(...args) {
 }
 
 export default function () {
-  const ref = process.env.GITHUB_REF_NAME ?? "";
+  const ref = process.env.SITE_VERSION ?? "";
   const tag = ref.startsWith("v") ? ref : git("describe", "--tags", "--exact-match", "HEAD");
   if (tag) return { version: tag, version_url: `${site.repo_url}/releases/tag/${tag}` };
 
