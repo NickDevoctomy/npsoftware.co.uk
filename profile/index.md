@@ -2,10 +2,10 @@
 layout: profile
 nav: profile
 title: Profile
-description: "The professional profile of Nick Pateman, Senior Software Engineer at Avalara."
+description: "The professional profile of Nick Pateman, Senior Software Engineer."
 permalink: /profile/index.html
 name: Nick Pateman
-headline: Senior Software Engineer at Avalara
+headline: Senior Software Engineer
 location: Seaford, England, United Kingdom
 photo: /assets/img/blog-author.jpg
 
@@ -29,6 +29,9 @@ callouts:
       Software engineering has always been my passion, and I'd be remiss not to admit that writing *less* code was never something I set out to do. I genuinely enjoy it far too much for that.
 
       That said, AI is now a core part of how software gets built, and I've fully embraced it. I use AI tools confidently in my day-to-day work to deliver more, faster, while keeping the same high standards of quality and making sure that I understand everything I ship. It's new territory for all of us, but I'm here for it, and whatever tools a team works with, I'll get the most out of them.
+  - icon: linkedin
+    text: |
+      This is a summary of my career. My full profile, with details of each role and the companies I've worked for, is on [LinkedIn](https://www.linkedin.com/in/nickpateman).
 
 skills:
   - group: Languages and frameworks
@@ -44,4 +47,4 @@ skills:
   - group: AI
     items: ["Claude Code", "Cursor", "opencode", "open models"]    
 ---
-I'm a software engineer who has been building software professionally since 2000. Along the way I've worked on touch panel control systems, document protection and DRM, cryptographic identity and single sign-on, manufacturing software and, for the last few years, tax compliance automation at Avalara.
+I'm a software engineer who has been building software professionally since 2000. Along the way I've worked on touch panel control systems, document protection and DRM, cryptographic identity and single sign-on, manufacturing software and, for the last few years, tax compliance automation.

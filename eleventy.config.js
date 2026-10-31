@@ -74,7 +74,7 @@ export default function (eleventyConfig) {
   // Profile page (see _11ty/profile.js).
   eleventyConfig.addFilter("month", profile.formatMonth);
   eleventyConfig.addFilter("duration", (start, end) => profile.duration(start, end));
-  eleventyConfig.addFilter("group_by_company", profile.groupByCompany);
+  eleventyConfig.addFilter("group_by_industry", profile.groupByIndustry);
 
   // The years that have posts, newest first, for the search page's filter.
   eleventyConfig.addFilter("post_years", (posts) =>

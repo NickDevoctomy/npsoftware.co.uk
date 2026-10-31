@@ -30,18 +30,18 @@ export function duration(start, end, now = new Date()) {
   return parts.join(" ") || "1 mo";
 }
 
-// Roles (newest first) grouped into runs at the same company, so several
-// roles at one employer sit under one heading with the total time there.
-export function groupByCompany(roles) {
+// Roles (newest first) grouped into runs in the same industry, so several
+// consecutive roles sit under one heading with the total time there.
+export function groupByIndustry(roles) {
   const groups = [];
   for (const role of roles) {
     const last = groups.at(-1);
-    if (last && last.company === role.company) {
+    if (last && last.industry === role.industry) {
       last.roles.push(role);
       last.start = role.start;
     } else {
       groups.push({
-        company: role.company,
+        industry: role.industry,
         employment: role.employment,
         location: role.location,
         start: role.start,

@@ -40,14 +40,14 @@ layout: base
 
   <section class="profile-section" aria-labelledby="experience">
     <h2 class="section__title" id="experience">Experience</h2>
-    {%- assign companies = collections.experience | group_by_company %}
+    {%- assign companies = collections.experience | group_by_industry %}
     <ol class="timeline">
       {%- for company in companies %}
       <li class="company">
         <div class="company__head">
-          <span class="company__mark" aria-hidden="true">{{ company.company | slice: 0 }}</span>
+          <span class="company__mark" aria-hidden="true">{{ company.industry | slice: 0 }}</span>
           <div>
-            <h3 class="company__name">{{ company.company }}</h3>
+            <h3 class="company__name">{{ company.industry }}</h3>
             <p class="company__meta">{{ company.employment }} · {{ company.start | duration: company.end }}{% if company.location %} · {{ company.location }}{% endif %}</p>
           </div>
         </div>
