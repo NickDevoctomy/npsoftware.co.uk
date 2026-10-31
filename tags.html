@@ -1,0 +1,22 @@
+---
+permalink: /tags/index.html
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>Tags - {{ site.title }}</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="{{ site.url }}/search/">
+  <meta http-equiv="refresh" content="0; url=/search/">
+  <script>
+    // The tags page became the search page: /tags/#website -> /search/?tag=website
+    var tag = decodeURIComponent(location.hash.slice(1));
+    location.replace("/search/" + (tag ? "?tag=" + encodeURIComponent(tag) : ""));
+  </script>
+</head>
+<body>
+  <p>Tags have moved to <a href="/search/">search</a>.</p>
+</body>
+</html>

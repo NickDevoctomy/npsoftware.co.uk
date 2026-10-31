@@ -1,0 +1,7 @@
+{%- assign share_url = site.url | append: page.url -%}
+<div class="share">
+  <span class="share__label">Share</span>
+  <a class="btn btn--ghost" href="https://twitter.com/intent/tweet?text={{ twitter_text | default: title | url_encode }}&amp;url={{ share_url | url_encode }}&amp;via={{ site.twitter_username }}" rel="noopener">{% include icon.html name="x" px=14 %}Twitter</a>
+  <a class="btn btn--ghost" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" rel="noopener">{% include icon.html name="facebook" px=16 %}Facebook</a>
+  <button type="button" class="btn btn--ghost" data-copy-link="{{ share_url }}">{% include icon.html name="link" px=16 %}<span data-copy-label>Copy link</span></button>
+</div>
