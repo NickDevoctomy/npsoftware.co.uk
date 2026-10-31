@@ -25,6 +25,7 @@
   --dark-hover: #000000;
   --shadow: 0 24px 48px rgba(29, 35, 48, 0.18);
   --shadow-soft: 0 12px 32px rgba(29, 35, 48, 0.08);
+  --hero-opacity: 0.28;
   --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: ui-monospace, "Cascadia Code", "Fira Code", Consolas, monospace;
   color-scheme: light;
@@ -51,6 +52,7 @@
     --dark-hover: #303846;
     --shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
     --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --hero-opacity: 0.2;
     color-scheme: dark;
   }
 }
@@ -72,6 +74,7 @@
   --dark-hover: #303846;
   --shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
   --shadow-soft: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --hero-opacity: 0.2;
   color-scheme: dark;
 }
 
@@ -93,7 +96,9 @@ body {
   line-height: 1.6;
 }
 
-main { flex-grow: 1; }
+/* clip: the full-width post hero is 100vw, which is wider than the page
+   when there's a vertical scrollbar. */
+main { flex-grow: 1; overflow-x: clip; }
 
 img, svg { display: block; max-width: 100%; }
 
@@ -400,6 +405,24 @@ button.icon-btn { padding: 0; font: inherit; cursor: pointer; }
 .article { padding-top: 48px; padding-bottom: 96px; }
 
 .back-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; font-weight: 600; color: var(--muted); }
+
+/* Post image: a faded backdrop behind the back link, title and byline. It
+   spans the window, from the site header (top: -48px undoes the article's
+   padding-top) to the end of the byline, and fades out downwards. */
+.article__top { position: relative; isolation: isolate; }
+.article__hero {
+  position: absolute;
+  z-index: -1;
+  top: -48px;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 55%, transparent 100%);
+}
+.article__hero img { width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: top center; opacity: var(--hero-opacity); }
 
 .article__header { margin-top: 24px; }
 .article__header:first-child { margin-top: 0; }
