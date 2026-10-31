@@ -38,8 +38,10 @@ skills:
   - group: Identity and security
     items: ["Identity Server", "Okta Single Sign-On", "M-PIN Strong Authentication Server"]
   - group: Tools
-    items: ["GitHub", "TFS", "Microsoft Outlook"]
+    items: ["GitHub", "TFS"]
   - group: Other
     items: ["AMX", "Control Systems", "Chromakey", "Graphic Design"]
+  - group: AI
+    items: ["Claude Code", "Cursor", "opencode", "open models"]    
 ---
 I'm a software engineer who has been building software professionally since 2000. Along the way I've worked on touch panel control systems, document protection and DRM, cryptographic identity and single sign-on, manufacturing software and, for the last few years, tax compliance automation at Avalara.
