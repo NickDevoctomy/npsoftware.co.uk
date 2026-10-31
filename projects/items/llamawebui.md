@@ -11,8 +11,11 @@ links:
   - label: GitHub
     url: https://github.com/NickDevoctomy/LlamaWebUI
     icon: github
+  - label: Releases on GitHub
+    url: https://github.com/NickDevoctomy/LlamaWebUI/releases
+    icon: github    
 skills: ["Python", "TypeScript", "LLM"]
-# The Markdown below is the write-up on the project's own page. Its `##`
+# The Markdown below is the write-up on the project's own page. Its `##` and `###`
 # headings become the page's contents list.
 ---
 
@@ -52,12 +55,83 @@ Run simple or complex benchmarks, using a selection of simple tools. This featur
 
 ### Assistant
 
-... more information to come ...
+One feature I was keen to add to this application was an AI assistant that can operate the application, download models, create profiles, benchmark them, optimise the profiles and create reports of its findings. Once you have configured a valid OpenRouter access token you will have access to the 'Assistant' button via the left-side navigation menu and have access to this very feature set.
+
+![Lama AI Assistant](/assets/img/screenshots/llamawebui-assistant1.png)
+
+Lama, the AI assistant built into LlamaWebUI will happily chug away for hours, tweaking your profiles, running benchmarks and comparing run statistics in order to find the most optimal settings for your system. If it doesn't understand anything, it will perform research and create research documents which can then be used by other Lama sessions.
+
+This whole process can be done via inexpensive models, such as Qwen 3.8 Omni Flash, or Gemini 3.8 Flash. I've run many assisted optimisation runs while testing and never even come close to the default spend cap of $2. With that said, it's still advised that you restruct the spend on your API tokens just incase.
+
+In terms of real world results, I've had it boost token generation by 10~ tp/s on the 2 machines I have so I know that it works. 
 
 ### User Management
 
-... more information to come ...
+Users can be easily managed via UI, allowing you to setup access with a strict set of access priviledges. Allowing you to decide who can download new models / runtimes into the server, create new profiles, use the assistant etc. 
+
+Of course the primary use case for LLamaWebUI is serving models using llama-server by generating Access keys, which you can then use from another machine on your network using an agentic harness, such as opencode (recommended).
+
+An example of such a configuration would be,
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "llamawebui": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://192.168.1.69:1234/v1",
+        "apiKey": "{env:LLAMA_WEB_UI_API_KEY}"
+      },
+      "models": {
+        "qwen3.8-flash-next": {
+          "name": "Qwen3.8 Flash Next",
+          "reasoning": true,
+          "options": { "reasoningEffort": "medium" },
+          "variants": {
+            "off":    { "reasoningEffort": "none" },
+            "low":    { "reasoningEffort": "low" },
+            "medium": { "reasoningEffort": "medium" },
+            "max":    { "reasoningEffort": "xhigh" }
+          }		  
+        }
+      }
+    }
+  },
+  "model": "llamawebui/qwen3.8-flash-next",
+}
+```
+
+> The above example requires that you store your generated API key (from LLamaWebUI) in an environment variable 'LLAMA_WEB_UI_API_KEY'. This way it is not directly entered into the configuration file.
+
+![Access Keys Configuration](/assets/img/screenshots/llamawebui-accesskeys1.png)
+
+![User Configuration](/assets/img/screenshots/llamawebui-users1.png)
+
+![Role Configuration](/assets/img/screenshots/llamawebui-addrole1.png)
 
 ### Dashboard
 
-... more information to come ...
+The dashboard in LlamaWebUI takes inspiration from a host of different applications which allow you to serve LLM models locally, offering information critical to getting the most out of your system. Token rates, memory usage breakdowns, system resources over time etc.
+
+![Dashboard](/assets/img/screenshots/llamawebui-dashboard1.png)
+
+### Releases
+
+LlamaWebUI is available for download as a release, which are packaged as a compiled executable with a single dependent directory. Just unzip the release and run the executable with your required arguments. Personally I would recommend creating a powershell script to startup the application with, something like this,
+
+```
+$env:LLAMAWEBUI_HOST = '127.0.0.1'
+$env:LLAMAWEBUI_PORT = '8080'
+$env:LLAMAWEBUI_ROUTER_HOST = '127.0.0.1'
+$env:LLAMAWEBUI_ROUTER_PORT = '1234'
+$env:LLAMAWEBUI_DATA_DIR = 'C:\LlamaWebUI\data'
+
+.\llamawebui.exe serve
+```
+
+> Changing the IP addresses in the above script to '0.0.0.0' would serve LlamaWebUI on your local network which requires the generation of at least 1 Access Token. It is recommended you try it out on localhost first, create your access token, and then serve on the network if you wish to access from another machine.
+
+The pre-compiled releases are currently only available as windows x64 builds, if anyone shows interest in this application I may create other targets in the future.
+
+[LlamaWebUI Releases on GitHub](https://github.com/NickDevoctomy/LlamaWebUI/releases)

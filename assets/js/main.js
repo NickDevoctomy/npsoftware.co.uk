@@ -84,23 +84,35 @@
 
   // --- Project contents -----------------------------------------------------
 
-  // Lists a project write-up's ## headings beside it, marking the one being
-  // read. Hidden unless there are at least two.
+  // Lists a project write-up's ## and ### headings beside it, each ### nested
+  // under the ## before it, marking the one being read. Hidden unless there
+  // are at least two.
   function initToc() {
     var toc = document.querySelector("[data-toc]");
     var source = document.querySelector("[data-toc-source]");
     if (!toc || !source) return;
-    var headings = Array.prototype.slice.call(source.querySelectorAll("h2[id]"));
+    var headings = Array.prototype.slice.call(source.querySelectorAll("h2[id], h3[id]"));
     if (headings.length < 2) return;
 
     var list = toc.querySelector("[data-toc-list]");
+    var parent = null;
     var links = headings.map(function (heading) {
       var item = document.createElement("li");
       var link = document.createElement("a");
       link.href = "#" + heading.id;
       link.textContent = heading.textContent;
       item.appendChild(link);
-      list.appendChild(item);
+      if (heading.tagName === "H3" && parent) {
+        var sub = parent.querySelector("ol");
+        if (!sub) {
+          sub = document.createElement("ol");
+          parent.appendChild(sub);
+        }
+        sub.appendChild(item);
+      } else {
+        list.appendChild(item);
+        if (heading.tagName === "H2") parent = item;
+      }
       return link;
     });
     toc.hidden = false;
@@ -118,6 +130,47 @@
     }
     window.addEventListener("scroll", mark, { passive: true });
     mark();
+  }
+
+  // --- Image lightbox -------------------------------------------------------
+
+  // Wraps each image in a project write-up in a button that shows it full size
+  // in a <dialog>, captioned with its alt text. Images already inside a link
+  // are left alone. Esc, the close button or a click outside the image closes it.
+  function initLightbox() {
+    var dialog = document.querySelector("[data-lightbox]");
+    var source = document.querySelector("[data-toc-source]");
+    if (!dialog || !source || typeof dialog.showModal !== "function") return;
+
+    var big = dialog.querySelector("[data-lightbox-img]");
+    var caption = dialog.querySelector("[data-lightbox-caption]");
+
+    Array.prototype.slice.call(source.querySelectorAll("img")).forEach(function (img) {
+      if (img.closest("a, button")) return;
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "lightbox-trigger";
+      button.setAttribute("aria-label", "View full size" + (img.alt ? ": " + img.alt : ""));
+      img.parentNode.insertBefore(button, img);
+      button.appendChild(img);
+      button.addEventListener("click", function () {
+        big.src = img.currentSrc || img.src;
+        big.alt = img.alt;
+        caption.textContent = img.alt;
+        caption.hidden = !img.alt;
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelector("[data-lightbox-close]").addEventListener("click", function () {
+      dialog.close();
+    });
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog || event.target.classList.contains("lightbox__figure")) dialog.close();
+    });
+    dialog.addEventListener("close", function () {
+      big.removeAttribute("src");
+    });
   }
 
   // --- Search ---------------------------------------------------------------
@@ -236,6 +289,7 @@
     initThemeToggle();
     initCopyLinks();
     initToc();
+    initLightbox();
     initSearch();
   });
 })();

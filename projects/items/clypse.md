@@ -12,7 +12,7 @@ links:
     url: https://github.com/devoctomy/clypse
     icon: github
 skills: ["Amazon S3", "Amazon Cognito", "AWS IAM", "Amazon CloudFront", "Serverless", "Cryptography"]
-# The Markdown below is the write-up on the project's own page. Its `##`
+# The Markdown below is the write-up on the project's own page. Its `##` and `###`
 # headings become the page's contents list.
 ---
 ## Overview

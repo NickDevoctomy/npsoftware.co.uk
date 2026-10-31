@@ -91,4 +91,12 @@ layout: base
   <div class="wrap wrap--medium project-page__share">
     {% include share.html %}
   </div>
+
+  <dialog class="lightbox" aria-label="Image" data-lightbox>
+    <button class="lightbox__close" type="button" aria-label="Close" data-lightbox-close>{% include icon.html name="close" px=22 %}</button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" alt="" data-lightbox-img>
+      <figcaption class="lightbox__caption" data-lightbox-caption></figcaption>
+    </figure>
+  </dialog>
 </article>
