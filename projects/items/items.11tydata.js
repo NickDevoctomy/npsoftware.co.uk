@@ -1,6 +1,12 @@
-// Projects shown on the projects page. Each file is one project: front matter
-// for the details, Markdown for the description. They're collected as
-// `collections.projects` and aren't pages of their own.
+// Projects. Each file is one project: front matter for the details, Markdown
+// for the full write-up. They're collected as `collections.projects` for the
+// projects page, and each gets its own page at /projects/<file name>/, so
+// renaming a project file changes its URL.
 export default {
-  permalink: false
+  layout: "project",
+  nav: "projects",
+  eleventyComputed: {
+    permalink: (data) => `/projects/${data.page.fileSlug}/`,
+    title: (data) => data.title ?? data.name
+  }
 };
