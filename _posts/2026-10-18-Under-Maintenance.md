@@ -2,7 +2,7 @@
 layout: post
 title: 'Under Maintenance'
 date: 2026-10-18 12:00:00
-image: '/assets/img/website-designing.jpg'
+image: '/assets/img/wipcartoon1.jpg'
 description: 'Pardon the dust, this site is getting a bit of an overhaul.'
 tags:
  - website

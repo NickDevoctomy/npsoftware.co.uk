@@ -2,7 +2,11 @@
 layout: base
 ---
 <article class="article wrap wrap--narrow">
-  <a class="back-link" href="/">{% include icon.html name="arrow-left" px=16 %}All posts</a>
+  <div class="article__top">
+  {%- if image %}
+  <div class="article__hero" aria-hidden="true"><img src="{{ image }}" alt=""></div>
+  {%- endif %}
+  <a class="back-link"href="/">{% include icon.html name="arrow-left" px=16 %}All posts</a>
 
   <header class="article__header">
     {%- if tags.size > 0 %}
@@ -24,6 +28,7 @@ layout: base
       </div>
     </div>
   </header>
+  </div>
 
   <div class="article__body prose">
     {{ content }}
