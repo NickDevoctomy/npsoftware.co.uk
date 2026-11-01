@@ -14,7 +14,7 @@ links:
   - label: Releases on GitHub
     url: https://github.com/NickDevoctomy/fusewalk/releases
     icon: github    
-skills: ["Python", "Flutter", "LLM", "Fine Tuning", "Huggingface", "Qwen"]
+skills: ["Python", "Flutter", "LLM", "Fine-tuning", "HuggingFace", "Qwen"]
 # The Markdown below is the write-up on the project's own page. Its `##` and `###`
 # headings become the page's contents list.
 ---
@@ -41,9 +41,9 @@ The codex is essentially just an sqlite database. It contains categorised recipe
 
 ### Core Recipes
 
-The latest 0.7 codex includes 3381 recipes, 2749 of those are core recipies which means that they make it into the deployed game and do not require inference.
+The latest 0.7 codex includes 3381 recipes, 2749 of those are core recipes which means that they make it into the deployed game and do not require inference.
 
-The remainder are not included in the deployed gane, but are just used for training, in order to improve output. Here is the complete breakdown,
+The remainder are not included in the deployed game, but are just used for training, in order to improve output. Here is the complete breakdown,
 
 | Section | Category | Recipes | Description |
 | --- | --- | ---: | --- |
@@ -81,13 +81,13 @@ The majority of the recipes were created using Foundation models, such as Opus 5
 
 The codex itself can be explored and updated using the explorer application, where you can even create your own human, or AI curated categories.
 
-![Code Explorer Codex Selection](/assets/img/screenshots/fusewalk-codexexplorer1.png)
+![Codex Explorer Codex Selection](/assets/img/screenshots/fusewalk-codexexplorer1.png)
 
-![Code Explorer Main Menu](/assets/img/screenshots/fusewalk-codexexplorer2.png)
+![Codex Explorer Main Menu](/assets/img/screenshots/fusewalk-codexexplorer2.png)
 
-### Fine Tuning Process
+### Training Process
 
-Fine-tuning of the model is done entirely through another terminal based python application. Allowing you to easily confgure how the training is to be performed. A breakdown of the training parameters is as follows,
+Fine-tuning of the model is done entirely through another terminal based python application. Allowing you to easily configure how the training is to be performed. A breakdown of the training parameters is as follows,
 
 | Param name | Data type | Description |
 | --- | --- | --- |
@@ -126,11 +126,11 @@ Fine-tuning of the model is done entirely through another terminal based python 
 
 One technique I employed in order to improve the training process by giving me a rough indication of the quality of the final model was to integrate with OpenRouter and ask a low cost model to judge recipies created by the model. This is where I ended up spending a whole bunch of money refining this process, which was extremely tedious. I liken it to calibrating a 3D printer, it really was a matter of repeated training, testing, refining, etc. over and over, with me occasionally having to top up my credit on OpenRouter. I opted to use Gemini 3.8 Flash in the end as it gave a good compromise of quality and price.
 
-The Judge will mark a prediction from the model as Good, Nonsense or a 'Mashup'. Where a 'Mashup is where 2 words are just joined together, this is allowed but considered lazy and inimaginative so the model is discouraged from doing this. Obviously sometimes it is correct, so it's not stopped entirely.
+The Judge will mark a prediction from the model as Good, Nonsense or a 'Mashup'. Where a 'Mashup is where 2 words are just joined together, this is allowed but considered lazy and unimaginative so the model is discouraged from doing this. Obviously sometimes it is correct, so it's not stopped entirely.
 
 ![Trainer Run Selection](/assets/img/screenshots/fusewalk-trainer2.png)
 
-Training runs are costing around 70c to 85c to train on average.
+Training runs are costing around \$0.70c to \$0.85c to train on average.
 
 ### Reasoning
 
@@ -146,19 +146,19 @@ This certainly wasn't the silver bullet I had hoped it to be, but it did improve
 
 I had originally considered getting this onto the Google Play store, but changed my mind in the end as I want to spend my time on other projects. One cost to consider was the distribution of the models, if I had uploaded them to S3 and allowed the game to download it directly, I could have ended up just costing myself $$$ a month, assuming anyone played it of course.
 
-That's where HuggingFace comes in, not only can I share the models I fine-tuned for others to use freely, conforming to any licensing requires for using the Qwen model, but as a public model, downloads are free, completely removing that cost to me.
+That's where HuggingFace comes in, not only can I share the models I fine-tuned for others to use freely, conforming to any licensing requirements for using the Qwen model, but as a public model, downloads are free, completely removing that cost to me.
 
-The training tool, not only quantises the trained model for use in the game, but also publishes directly to HuggingFace, updating the index file used by the game and and additional licenses.
+The training tool, not only quantises the trained model for use in the game, but also publishes directly to HuggingFace, updating the index file used by the game and any additional licenses.
 
 You can view the repository here, [Fusewalk Models on HuggingFace](https://huggingface.co/npateman/fusewalk-models).
 
 ![Fusewalk Model Download](/assets/img/screenshots/fusewalk-desktop2.png)
 
-As you can see from the above screenshot I also added benchmarking capabilities in to the app to allow for the creation of timing reports. As when I asked a friend to try it out, his S23 Ultra was barely capable of running the 4b model, even though my S24 Ultra ran it with ease. In the end he opted for the 1.7b model which runs super fast on both devices and produces a reasonable quality of output. Personally I would still opt for the 4b model if your device can handle it.
+As you can see from the above screenshot I also added benchmarking capabilities in to the app to allow for the creation of timing reports. When I asked a friend to try it out, his S23 Ultra was barely capable of running the 4b model, even though my S24 Ultra ran it with ease. In the end he opted for the 1.7b model which runs super fast on both devices and produces a reasonable quality of output. Personally I would still opt for the 4b model if your device can handle it.
 
 ## Conclusions
 
-I actually had quite a bit of fun making this one, despite the costs (OpenRouter expenses, and additional Claude code credits), and I am happy with the output, I regularly play with the game on my mobile device. If you have a Windows PC or Android device, give it a try, it might keep you entertained for a short while.
+I actually had quite a bit of fun making this one, despite the costs (OpenRouter expenses, and additional Claude Code credits), and I am happy with the output, I regularly play with the game on my mobile device. If you have a Windows PC or Android device, give it a try, it might keep you entertained for a short while.
 
 The pre-compiled releases are currently only available as Windows x64 and Android builds. If anyone shows interest in this application I may create other targets in the future.
 
