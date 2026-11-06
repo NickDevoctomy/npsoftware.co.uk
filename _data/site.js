@@ -12,7 +12,9 @@ export default {
   username: "Nick Pateman",
   user_description: "Tech Maniac and Solutions Architect",
   user_title: "Tech Maniac and Solutions Architect",
-  email: "nick@npsoftware.co.uk",
+  // The email address reversed then base64-encoded, so it never appears in
+  // the HTML. assets/js/main.js decodes it when a [data-email] link is clicked.
+  email_encoded: "a3Uub2MuZXJhd3Rmb3NwbkBrY2lu",
   twitter_username: "npsoftwareuk",
   facebook_username: "npsoftwareuk",
   flipboard_username: "firkinfedup",

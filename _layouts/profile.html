@@ -15,7 +15,7 @@ layout: base
       {%- if links.size > 0 %}
       <div class="profile-hero__links">
         {%- for link in links %}
-        <a class="btn btn--ghost" href="{{ link.url }}"{% unless link.url contains "mailto:" %} rel="noopener"{% endunless %}>{% include icon.html name=link.icon px=16 %}{{ link.label }}</a>
+        {%- if link.email %}<a class="btn btn--ghost" href="#" data-email="{{ site.email_encoded }}">{%- else %}<a class="btn btn--ghost" href="{{ link.url }}" rel="noopener">{%- endif %}{% include icon.html name=link.icon px=16 %}{{ link.label }}</a>
         {%- endfor %}
       </div>
       {%- endif %}

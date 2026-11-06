@@ -1,4 +1,4 @@
-// npSoftware: cookie notice, colour theme button, copy-link button, project
+// npSoftware: email links, cookie notice, colour theme button, copy-link button, project
 // contents lists and the search page.
 (function () {
   "use strict";
@@ -284,7 +284,26 @@
     render();
   }
 
+  // --- Email links ----------------------------------------------------------
+
+  // The address is kept out of the HTML: a link's data-email holds it reversed
+  // then base64-encoded (site.email_encoded). Decode it and open mailto: only
+  // when the link is clicked.
+  function decodeEmail(encoded) {
+    return window.atob(encoded).split("").reverse().join("");
+  }
+
+  function initEmailLinks() {
+    document.addEventListener("click", function (event) {
+      var link = event.target.closest ? event.target.closest("[data-email]") : null;
+      if (!link) return;
+      event.preventDefault();
+      window.location.href = "mailto:" + decodeEmail(link.getAttribute("data-email"));
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    initEmailLinks();
     initCookieNotice();
     initThemeToggle();
     initCopyLinks();

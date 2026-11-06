@@ -29,4 +29,4 @@ comprehensive information on how to do this on a wide variety of browsers and de
 
 ## Contacting us
 
-If you have any questions about this policy or our use of cookies, please contact us via [email](mailto:nick@npsoftware.co.uk).
+If you have any questions about this policy or our use of cookies, please contact us via <a href="#" data-email="a3Uub2MuZXJhd3Rmb3NwbkBrY2lu">email</a>.
