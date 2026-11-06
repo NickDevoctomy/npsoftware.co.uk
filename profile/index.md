@@ -10,12 +10,13 @@ location: Seaford, England, United Kingdom
 photo: /assets/img/blog-author.jpg
 
 # Shown as buttons under the headline. `icon` is a name from _includes/icon.html.
+# `email: true` in place of `url` makes an email link (site.email_encoded).
 links:
   - label: LinkedIn
     url: https://www.linkedin.com/in/nickpateman
     icon: linkedin
-  - label: nick@npsoftware.co.uk
-    url: mailto:nick@npsoftware.co.uk
+  - label: Email
+    email: true
     icon: mail
   - label: djabstraction.com
     url: https://www.djabstraction.com
